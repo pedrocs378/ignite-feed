@@ -60,3 +60,60 @@
 .content a:hover {
   color: var(--green-300);
 }
+
+.commentForm {
+  width: 100%;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+
+  border-top: 1px solid var(--gray-600);
+}
+
+.commentForm > strong {
+  line-height: var(--lh-default);
+}
+
+.commentForm textarea {
+  height: 6rem;
+  width: 100%;
+  margin-top: 1rem;
+  padding: 1rem;
+  resize: none;
+  
+  background-color: var(--gray-900);
+  color: var(--gray-100);
+  line-height: var(--lh-small);
+
+  border: 0;
+  border-radius: var(--br-default);
+}
+
+.commentForm footer {
+  visibility: hidden;
+  max-height: 0;
+}
+
+.commentForm:focus-within footer {
+  visibility: visible;
+  max-height: none;
+}
+
+.commentForm button[type='submit'] {
+  padding: 1rem 1.5rem;
+  margin-top: 1rem;
+  cursor: pointer;
+
+  border-radius: var(--br-default);
+  border: 0;
+
+  background-color: var(--green);
+  color: var(--white);
+
+  font-weight: var(--fw-bold);
+
+  transition: background-color 0.2s ease;
+}
+
+.commentForm button[type='submit']:hover {
+  background-color: var(--green-300);
+}

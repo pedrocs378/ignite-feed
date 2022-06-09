@@ -25,6 +25,22 @@
 
   /* Line Height */
   --lh-default: 1.6;
+  --lh-small: 1.4;
+}
+
+:focus {
+  outline: transparent;
+  box-shadow: 0 0 4px 2px var(--green);
+}
+
+::-moz-selection {
+  color: var(--white);
+  background: var(--green);
+}
+
+::selection {
+  color: var(--white);
+  background: var(--green);
 }
 
 * {
@@ -64,14 +80,4 @@ body::-webkit-scrollbar-thumb {
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.161);
 
   opacity: 1;
-}
-
-::-moz-selection {
-  color: var(--white);
-  background: var(--green);
-}
-
-::selection {
-  color: var(--white);
-  background: var(--green);
 }
