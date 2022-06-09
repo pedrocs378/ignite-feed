@@ -1,0 +1,62 @@
+.post {
+  background-color: var(--gray-800);
+  border-radius: var(--br-default);
+  padding: 2.5rem;
+}
+
+.post + .post {
+  margin-top: 2rem;
+}
+
+.post > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.post > header time {
+  font-size: var(--fs-small);
+  color: var(--gray-400);
+}
+
+.author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.authorInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.authorInfo strong {
+  color: var(--gray-100);
+  line-height: var(--lh-default);
+}
+
+.authorInfo span {
+  font-size: var(--fs-small);
+  color: var(--gray-400);
+  line-height: var(--lh-default);
+}
+
+.content {
+  line-height: var(--lh-default);
+  color: var(--gray-300);
+  margin-top: 1.5rem;
+}
+
+.content p {
+  margin-top: 1rem;
+}
+
+.content a {
+  font-weight: var(--fw-bold);
+  color: var(--green);
+  text-decoration: none;
+}
+
+.content a:hover {
+  color: var(--green-300);
+}
