@@ -12,16 +12,20 @@
   --green-300: #00b37e;
   --green: #00875f;
 
+  --red: #f75a68;
+
   /* Border Radius */
   --br-default: 8px;
+  --br-1: 2px;
 
   /* Font Weight */
   --fw-bold: 700;
   --fw-regular: 400;
 
   /* Font Size */
-  --fs-small: 0.875rem;
-  --fs-medium: 1rem;
+  --fs-x-small: 0.75rem;  /* 12px */
+  --fs-small: 0.875rem; /* 14px */
+  --fs-medium: 1rem; /* 16px */
 
   /* Line Height */
   --lh-default: 1.6;
@@ -59,6 +63,10 @@ body, input, textarea, button {
   font-family: 'Roboto', sans-serif;
   font-weight: var(--fw-regular);
   font-size: var(--fs-medium);
+}
+
+button {
+  cursor: pointer;
 }
 
 body::-webkit-scrollbar-track {
