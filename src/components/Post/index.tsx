@@ -74,10 +74,10 @@ export function Post({ author, publishedAt, content }: PostProps) {
       <div className={styles.content}>
         {content.map((item) => {
           if (item.type === 'paragraph') {
-            return <p>{item.content}</p>
+            return <p key={item.content}>{item.content}</p>
           } else {
             return (
-              <p>
+              <p key={item.content}>
                 <a href="#">{item.content}</a>
               </p>
             )

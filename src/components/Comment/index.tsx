@@ -1,11 +1,12 @@
 import { ThumbsUp, Trash } from 'phosphor-react'
+import { memo } from 'react'
 
 import { Avatar } from '../Avatar'
 import { Comment as CommentProps } from '../Post'
 
 import styles from './styles.module.css'
 
-export function Comment({ content }: CommentProps) {
+function CommentComponent({ content }: CommentProps) {
   return (
     <div className={styles.comment}>
       <Avatar src="https://github.com/pedrocs378.png" hasBorder={false} />
@@ -42,3 +43,7 @@ export function Comment({ content }: CommentProps) {
     </div>
   )
 }
+
+export const Comment = memo(CommentComponent, (prevProps, nextProps) => {
+  return prevProps.content === nextProps.content && prevProps.id === nextProps.id
+})
