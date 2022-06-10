@@ -1,5 +1,6 @@
-import { useMemo } from 'react'
+import { ChangeEvent, FormEvent, useMemo, useState } from 'react'
 import { format, formatDistanceToNow } from 'date-fns'
+import { faker } from '@faker-js/faker'
 import ptBR from 'date-fns/locale/pt-BR'
 
 import { Avatar } from '../Avatar'
@@ -9,7 +10,33 @@ import { PostProps } from '../../App'
 
 import styles from './styles.module.css'
 
+export type Comment = {
+  id: string
+  content: string
+}
+
 export function Post({ author, publishedAt, content }: PostProps) {
+  const [commentText, setCommentText] = useState('')
+  const [comments, setComments] = useState<Comment[]>([])
+
+  const handleChangeCommentText = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setCommentText(e.currentTarget.value)
+  }
+
+  const handleCreateNewComment = (e: FormEvent) => {
+    e.preventDefault()
+
+    setComments((oldValues) => ([
+      ...oldValues,
+      {
+        id: faker.datatype.uuid(),
+        content: commentText
+      }
+    ]))
+
+    setCommentText('')
+  }
+
   const formattedPublishedAt = useMemo(() => {
     const dateRelativeToNow = formatDistanceToNow(publishedAt, {
       locale: ptBR,
@@ -58,11 +85,13 @@ export function Post({ author, publishedAt, content }: PostProps) {
         })}
       </div>
 
-      <form className={styles.commentForm}>
+      <form className={styles.commentForm} onSubmit={handleCreateNewComment}>
         <strong>Deixe seu feedback</strong>
 
         <textarea
           placeholder="Deixe um comentário"
+          value={commentText}
+          onChange={handleChangeCommentText}
         />
 
         <footer>
@@ -71,9 +100,11 @@ export function Post({ author, publishedAt, content }: PostProps) {
       </form>
 
       <div className={styles.commentList}>
-        <Comment />
-        <Comment />
-        <Comment />
+        {comments.map((comment) => {
+          return (
+            <Comment key={comment.id} {...comment} />
+          )
+        })}
       </div>
     </article>
   )
