@@ -1,38 +1,61 @@
+import { useMemo } from 'react'
+import { format, formatDistanceToNow } from 'date-fns'
+import ptBR from 'date-fns/locale/pt-BR'
+
 import { Avatar } from '../Avatar'
 import { Comment } from '../Comment'
+
+import { PostProps } from '../../App'
+
 import styles from './styles.module.css'
 
-export function Post() {
+export function Post({ author, publishedAt, content }: PostProps) {
+  const formattedPublishedAt = useMemo(() => {
+    const dateRelativeToNow = formatDistanceToNow(publishedAt, {
+      locale: ptBR,
+      addSuffix: true
+    })
+    
+    return {
+      title: format(publishedAt, "dd 'de' LLLL 'às' HH:mm", {
+        locale: ptBR
+      }),
+      dateRelativeToNow
+    }
+  }, [publishedAt])
+
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <Avatar src="https://github.com/pedrocs378.png" />
+          <Avatar src={author.avatarUrl} />
 
           <div className={styles.authorInfo}>
-            <strong>Pedro César</strong>
-            <span>Web Developer</span>
+            <strong>{author.name}</strong>
+            <span>{author.role}</span>
           </div>
         </div>
 
         <time
-          title="09 de junho às 13:00"
-          dateTime="2022-06-09 13:00:00"
+          title={formattedPublishedAt.title}
+          dateTime={publishedAt.toISOString()}
         >
-          Publicado há 1h
+          {formattedPublishedAt.dateRelativeToNow}
         </time>
       </header>
 
       <div className={styles.content}>
-        <p>Fala galeraa 👋</p>
-        <p>Acabei de subir mais um projeto no meu portifa. É um projeto que fiz no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀</p>
-        <p><a href="#">jane.design/doctorcare</a></p>
-
-        <p>
-          <a href="#">#novoprojeto</a>{' '}
-          <a href="#">#nlw</a>{' '}
-          <a href="#">#rocketseat</a>{' '}
-        </p>
+        {content.map((item) => {
+          if (item.type === 'paragraph') {
+            return <p>{item.content}</p>
+          } else {
+            return (
+              <p>
+                <a href="#">{item.content}</a>
+              </p>
+            )
+          }
+        })}
       </div>
 
       <form className={styles.commentForm}>
