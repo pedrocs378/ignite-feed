@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useMemo, useState } from 'react'
+import { ChangeEvent, FormEvent, useCallback, useMemo, useState } from 'react'
 import { format, formatDistanceToNow } from 'date-fns'
 import { faker } from '@faker-js/faker'
 import ptBR from 'date-fns/locale/pt-BR'
@@ -36,6 +36,12 @@ export function Post({ author, publishedAt, content }: PostProps) {
 
     setCommentText('')
   }
+
+  const handleDeleteComment = useCallback((comment: Comment) => {
+    setComments((oldValues) => {
+      return oldValues.filter((oldValue) => oldValue.id !== comment.id)
+    })
+  }, [])
 
   const formattedPublishedAt = useMemo(() => {
     const dateRelativeToNow = formatDistanceToNow(publishedAt, {
@@ -102,7 +108,11 @@ export function Post({ author, publishedAt, content }: PostProps) {
       <div className={styles.commentList}>
         {comments.map((comment) => {
           return (
-            <Comment key={comment.id} {...comment} />
+            <Comment
+              key={comment.id}
+              onDeleteClick={() => handleDeleteComment(comment)}
+              {...comment}
+            />
           )
         })}
       </div>

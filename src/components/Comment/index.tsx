@@ -1,12 +1,16 @@
-import { ThumbsUp, Trash } from 'phosphor-react'
 import { memo } from 'react'
+import { ThumbsUp, Trash } from 'phosphor-react'
 
 import { Avatar } from '../Avatar'
-import { Comment as CommentProps } from '../Post'
+import { Comment as CommentData } from '../Post'
 
 import styles from './styles.module.css'
 
-function CommentComponent({ content }: CommentProps) {
+type CommentProps = CommentData & {
+  onDeleteClick?: () => void
+}
+
+function CommentComponent({ content, onDeleteClick }: CommentProps) {
   return (
     <div className={styles.comment}>
       <Avatar src="https://github.com/pedrocs378.png" hasBorder={false} />
@@ -25,7 +29,11 @@ function CommentComponent({ content }: CommentProps) {
               </time>
             </div>
 
-            <button title="Excluir comentário">
+            <button
+              title="Excluir comentário"
+              type="button"
+              onClick={onDeleteClick}
+            >
               <Trash size={24} />
             </button>
           </header>
@@ -45,5 +53,8 @@ function CommentComponent({ content }: CommentProps) {
 }
 
 export const Comment = memo(CommentComponent, (prevProps, nextProps) => {
-  return prevProps.content === nextProps.content && prevProps.id === nextProps.id
+  return (
+    prevProps.content === nextProps.content &&
+    prevProps.id === nextProps.id
+  )
 })
