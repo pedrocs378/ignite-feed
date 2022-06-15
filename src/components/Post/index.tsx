@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useCallback, useMemo, useState } from 'react'
+import { ChangeEvent, FormEvent, InvalidEvent, useCallback, useMemo, useState } from 'react'
 import { format, formatDistanceToNow } from 'date-fns'
 import { faker } from '@faker-js/faker'
 import ptBR from 'date-fns/locale/pt-BR'
@@ -20,7 +20,8 @@ export function Post({ author, publishedAt, content }: PostProps) {
   const [comments, setComments] = useState<Comment[]>([])
 
   const handleChangeCommentText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setCommentText(e.currentTarget.value)
+    e.target.setCustomValidity('')
+    setCommentText(e.target.value)
   }
 
   const handleCreateNewComment = (e: FormEvent) => {
@@ -35,6 +36,10 @@ export function Post({ author, publishedAt, content }: PostProps) {
     ]))
 
     setCommentText('')
+  }
+
+  const handleNewCommentInvalid = (e: InvalidEvent<HTMLTextAreaElement>) => {
+    e.target.setCustomValidity('Esse campo é obrigatório!')
   }
 
   const handleDeleteComment = useCallback((comment: Comment) => {
@@ -98,10 +103,12 @@ export function Post({ author, publishedAt, content }: PostProps) {
           placeholder="Deixe um comentário"
           value={commentText}
           onChange={handleChangeCommentText}
+          onInvalid={handleNewCommentInvalid}
+          required
         />
 
         <footer>
-          <button type="submit">Comentar</button>
+          <button type="submit" disabled={!commentText.trim()}>Comentar</button>
         </footer>
       </form>
 

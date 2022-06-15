@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import { memo, useState } from 'react'
 import { ThumbsUp, Trash } from 'phosphor-react'
 
 import { Avatar } from '../Avatar'
@@ -11,6 +11,12 @@ type CommentProps = CommentData & {
 }
 
 function CommentComponent({ content, onDeleteClick }: CommentProps) {
+  const [likeCount, setLikeCount] = useState(0)
+
+  function handleLikeComment() {
+    setLikeCount((count) => count + 1)
+  }
+
   return (
     <div className={styles.comment}>
       <Avatar src="https://github.com/pedrocs378.png" hasBorder={false} />
@@ -42,9 +48,9 @@ function CommentComponent({ content, onDeleteClick }: CommentProps) {
         </div>
 
         <footer>
-          <button>
+          <button onClick={handleLikeComment}>
             <ThumbsUp />
-            Aplaudir <span>20</span>
+            Aplaudir <span>{likeCount}</span>
           </button>
         </footer>
       </div>
